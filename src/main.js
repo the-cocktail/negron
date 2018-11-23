@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import bodyParser from 'body-parser'
 import { graphqlExpress } from 'apollo-server-express'
 import aggregateSchemas from './schema-aggregator'
@@ -27,6 +28,11 @@ for (let endpoint of endpoints) {
   console.log(` - ${endpoint}`)
 }
 
+
+
+if (process.env.NO_CORS === "true") {
+  app.use(cors())
+}
 aggregateSchemas(endpoints).then(schema => {
   app.use(PATH, bodyParser.json(), graphqlExpress(request => ({ schema, context: { headers: request.headers } })))
 

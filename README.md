@@ -18,13 +18,13 @@ The easiest way to run the project is by using the docker image like this (consu
 ```console
 antonio@machine$ docker run \
   -e PROVIDER_URL_MELODY=https://api.melody.sh/graphql \
-  -e PROVIDER_URL_GRAPLOC=https://api.graphloc.com/graphql \
+  -e PROVIDER_URL_SPACEX=https://api.spacex.land/graphql \
   -p 3000:3000 \
   thecocktail/negron
 
 Aggregating the following endpoints:
- - https://api.graphloc.com/graphql
  - https://api.melody.sh/graphql
+ - https://api.spacex.land/graphql
 GraphQL API running at http://localhost:3000/api
 ```
 
@@ -35,13 +35,13 @@ antonio@machine$ docker run \
   -e NEGRON_PATH=/ \
   -e NEGRON_PORT=4000 \
   -e PROVIDER_URL_MELODY=https://api.melody.sh/graphql \
-  -e PROVIDER_URL_GRAPLOC=https://api.graphloc.com/graphql \
+  -e PROVIDER_URL_SPACEX=https://api.spacex.land/graphql \
   -p 4000:4000 \
   thecocktail/negron
 
 Aggregating the following endpoints:
- - https://api.graphloc.com/graphql
  - https://api.melody.sh/graphql
+ - https://api.spacex.land/graphql
 GraphQL API running at http://localhost:4000/
 ```
 
@@ -53,12 +53,12 @@ You can simply run the application as with node in the following way:
 antonio@machine$ NEGRON_PATH=/api \
     NEGRON_PORT=3000 \
     PROVIDER_URL_MELODY_REPO=https://api.melody.sh/graphql \
-    PROVIDER_URL_GRAPLOC=https://api.graphloc.com/graphql \
+    PROVIDER_URL_SPACEX=https://api.spacex.land/graphql \
     npm start
 
 Aggregating the following endpoints:
  - https://api.graphloc.com/graphql
- - https://api.melody.sh/graphql
+ - https://api.spacex.land/graphql
 Gateway running at http://localhost:3000/api
 ```
 

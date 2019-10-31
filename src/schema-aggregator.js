@@ -1,13 +1,13 @@
-import { setContext } from 'apollo-link-context'
-import { HttpLink } from 'apollo-link-http'
-import fetch from 'node-fetch'
-import {
+const { setContext } = require('apollo-link-context')
+const { HttpLink } = require('apollo-link-http')
+const fetch = require('node-fetch')
+const {
   introspectSchema,
   makeRemoteExecutableSchema,
   mergeSchemas
-} from 'graphql-tools'
+} = require('graphql-tools')
 
-const buildRemoteSchema = async (uri) => {
+const buildRemoteSchema = async uri => {
   const link = createLink(uri)
   try {
     const schema = await introspectSchema(link)
@@ -24,7 +24,7 @@ const buildRemoteSchema = async (uri) => {
   }
 }
 
-const createLink = (uri) => {
+const createLink = uri => {
   return setContext((request, previousContext) => {
     if (!previousContext.graphqlContext) {
       return {}
@@ -33,19 +33,19 @@ const createLink = (uri) => {
     const headers = previousContext.graphqlContext.headers
     return {
       headers: {
-        'Authorization': headers['authorization']
+        Authorization: headers.authorization
       }
     }
-  }).concat(
-    new HttpLink({ uri: uri, fetch })
-  )
+  }).concat(new HttpLink({ uri: uri, fetch }))
 }
 
-export default async (endpoints) => {
+module.exports = async endpoints => {
   return mergeSchemas({
-    schemas: await Promise.all(endpoints.map(async (uri) => {
-      const schema = await buildRemoteSchema(uri)
-      return schema
-    }))
+    schemas: await Promise.all(
+      endpoints.map(async uri => {
+        const schema = await buildRemoteSchema(uri)
+        return schema
+      })
+    )
   })
 }

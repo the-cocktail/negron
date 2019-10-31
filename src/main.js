@@ -1,15 +1,15 @@
-import express from 'express'
-import cors from 'cors'
-import bodyParser from 'body-parser'
-import { graphqlExpress } from 'apollo-server-express'
-import aggregateSchemas from './schema-aggregator'
+const express = require('express')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const { graphqlExpress } = require('apollo-server-express')
+const aggregateSchemas = require('./schema-aggregator')
 
 const app = express()
 const PORT = process.env.NEGRON_PORT || 3000
 const PATH = process.env.NEGRON_PATH || '/api'
 
-let endpoints = []
-for (let key of Object.keys(process.env)) {
+const endpoints = []
+for (const key of Object.keys(process.env)) {
   if (key.startsWith('PROVIDER_URL')) {
     endpoints.push(process.env[key])
   }
@@ -24,13 +24,11 @@ if (!endpoints.length) {
 }
 
 console.log('Aggregating the following endpoints:')
-for (let endpoint of endpoints) {
+for (const endpoint of endpoints) {
   console.log(` - ${endpoint}`)
 }
 
-
-
-if (process.env.NO_CORS === "true") {
+if (process.env.NO_CORS === 'true') {
   app.use(cors())
 }
 aggregateSchemas(endpoints).then(schema => {
